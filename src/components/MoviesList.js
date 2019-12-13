@@ -4,16 +4,38 @@ import '@material/react-chips/dist/chips.css';
 import PropTypes from 'prop-types';
 
 class MoviesList extends Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.changeRank = this.changeRank.bind(this);
+
+    this.state = {
+      query: [],
+      rank: 3
+    }
+  }
+
   static propTypes = {
     movies: PropTypes.array.isRequired,
     playing: PropTypes.array.isRequired,
   }
 
-  state = {
-    query: []
+
+  changeRank = (e) => {
+    this.setState({rank: e.target.value});
   }
 
-  filterMovies(filter, moviesList) {
+  filterMoviesRank(playing) {
+    let rankMoviesList = []
+    playing.forEach(movie => {
+      if (movie.vote_average > this.state.rank) {
+        rankMoviesList.push(movie)
+      }
+    })
+    return rankMoviesList
+  }
+
+  filterMoviesGenre(filter, moviesList) {
     let filterMoviesList = []
     if (filter !== []) {
       moviesList.forEach(movie => {
@@ -25,6 +47,7 @@ class MoviesList extends Component {
           })
         })
       })
+      filterMoviesList = this.filterMoviesRank(filterMoviesList);
       return [...new Set(filterMoviesList)]
     } else {
       this.setState({query: filter})
@@ -36,11 +59,11 @@ class MoviesList extends Component {
     const { query } = this.state
     const { movies, playing } = this.props
     const moviesList = query.length === 0
-    ? playing
-    : this.filterMovies(this.state.query, playing);
+    ? this.filterMoviesRank(playing)
+    : this.filterMoviesGenre(this.state.query, playing);
 
     return (
-      <div>
+      <div className='movie-list'>
         <ChipSet
           filter
           handleSelect={(moviesId) => this.setState({query: moviesId})}
@@ -49,7 +72,12 @@ class MoviesList extends Component {
             <Chip key={ index } id={ movie.id } label={ movie.name } />          
           ))}
         </ChipSet>
-        <div>
+        <div className='movie-list__range'>
+          <input type='range' min='0' max='10' step='0.5' className='slider' id='myRange'
+            value={this.state.rank} onChange={this.changeRank} />
+        </div>
+        {this.state.rank}
+        <div className='movie-list__content'>
           {moviesList.map((play, index) => (
             <div key={ index }>
               <h4>{ play.original_title }</h4>

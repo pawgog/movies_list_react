@@ -37,6 +37,7 @@ class App extends Component {
   }
 
   sortingMovies(movies, playing) {
+    playing.sort((a, b) => (a.vote_average < b.vote_average) ? 1 : -1 )
     movies.forEach(val_1 => {
       playing.forEach(val_2 => {
         val_2.genre_ids.forEach((genre, index) => {
