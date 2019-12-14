@@ -23,13 +23,13 @@ class App extends Component {
     axios.get(`https://api.themoviedb.org/3/configuration?api_key=563bb1cb72253b6be2c32ce80a7a07ef`)
     .then(res => {
       const images = res.data.images;
-      // console.log('movies:', images)
+      // console.log('images:', images)
       this.setState({ images });
     })
     axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=563bb1cb72253b6be2c32ce80a7a07ef&language=en-US&page=1`)
     .then(res => {
       const playing = res.data.results;
-      // console.log('movies:', playing)
+      // console.log('playing:', playing)
       this.setState({ playing });
       this.sortingMovies(this.state.movies, playing)
       this.changeImagePath(this.state.images, playing)

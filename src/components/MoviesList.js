@@ -8,10 +8,12 @@ class MoviesList extends Component {
     super(props, context);
 
     this.changeRank = this.changeRank.bind(this);
+    this.changeGenreSize = this.changeGenreSize.bind(this);
 
     this.state = {
       query: [],
-      rank: 3
+      rank: 3,
+      genreSize: false
     }
   }
 
@@ -23,6 +25,11 @@ class MoviesList extends Component {
 
   changeRank = (e) => {
     this.setState({rank: e.target.value});
+  }
+
+  changeGenreSize() {
+    const currentGenreSize = this.state.genreSize;
+    this.setState({ genreSize: !currentGenreSize });
   }
 
   filterMoviesRank(playing) {
@@ -64,26 +71,35 @@ class MoviesList extends Component {
 
     return (
       <div className='movie-list'>
-        <ChipSet
-          filter
-          handleSelect={(moviesId) => this.setState({query: moviesId})}
-        >
-          {movies.map((movie, index) => (
-            <Chip key={ index } id={ movie.id } label={ movie.name } />          
-          ))}
-        </ChipSet>
-        <div className='movie-list__range'>
-          <input type='range' min='0' max='10' step='0.5' className='slider' id='myRange'
-            value={this.state.rank} onChange={this.changeRank} />
+        <div>
+          <ChipSet
+            filter
+            className={this.state.genreSize ? 'movie-list__chips movie-list__chips--more': 'movie-list__chips'} 
+            handleSelect={(moviesId) => this.setState({query: moviesId})}
+          >
+            {movies.map((movie, index) => (
+              <Chip key={ index } id={ movie.id } label={ movie.name } />          
+            ))}
+          </ChipSet>
+          <button type='button' className='movie-list__button-more' onClick={this.changeGenreSize}>more genres</button>
         </div>
-        {this.state.rank}
+        <div className='movie-list__range'>
+          <input type='range' min='0' max='10' step='0.5'
+            value={this.state.rank} onChange={this.changeRank} />
+          <span className='movie-list__range__rank'>
+            {this.state.rank}          
+          </span>
+        </div>
+
         <div className='movie-list__content'>
           {moviesList.map((play, index) => (
-            <div key={ index }>
-              <h4>{ play.original_title }</h4>
+            <div key={ index } className='movie-list__content__detail'>
+              <h3>{ play.original_title }</h3>
+              <div className='movie-list__content__genre'>
                 {play.genre_ids.map((genre, index) => (
                   <span key={ index } id={ genre.id }>{ genre.name } / </span>
-                ))}
+                ))}                
+              </div>
               <img src={ play.poster_path } alt={ play.original_title } />
             </div>          
           ))}

@@ -1,0 +1,125 @@
+.movie-list {
+  & > div {
+    margin: 50px 10px;
+  }
+
+  &__chips {
+    max-height: 55px;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+
+    &--more {
+      max-height: 1000px;
+      transition: max-height 1s ease-in;
+    }
+  }
+
+  &__button-more {
+    position: absolute;
+    margin-top: 10px;
+    right: 5%;
+    border-radius: 16px;
+    background-color: $grey;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: Roboto, sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    letter-spacing: 0.01786em;
+    outline: none;
+  }
+
+  &__range {
+    position: relative;
+    padding-bottom: 25px;
+    text-align: center;
+
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 25px;
+      background: $grey;
+      border-radius: 20px;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+
+      &:hover {
+          opacity: 1;
+      }
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        background: $blue;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      &::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        background: $blue;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    }
+    &__rank {
+      position: absolute;
+      width: 75px;
+      height: 75px;
+      top: 40px;
+      margin: 0 auto;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      &::after {
+        position: absolute;
+        background-image: url('../icon/star.png');
+        background-size: 75px;
+        display: inline-block;
+        width: 75px;
+        height: 75px;
+        left: 0;
+        top: -30px;
+        z-index: -1;
+        content:"";
+      }
+    }
+  }
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    &__detail {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 20px;
+      padding: 20px;
+      top: 0;
+      cursor: pointer;
+      box-shadow: 0px 0px 20px -10px rgba(0,0,0,0.75);
+      transition: 0.5s ease-in-out;
+
+      &:hover {
+        top: -10px;
+        box-shadow: 0px 0px 40px -10px rgba(0,0,0,0.75);
+      }
+
+      & h3 {
+        margin: 10px auto;
+      }
+    }
+
+    &__genre {
+      max-width: 190px;
+      margin: 10px auto;
+      text-align: center;
+    }
+  }
+}
