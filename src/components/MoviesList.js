@@ -81,7 +81,7 @@ class MoviesList extends Component {
               <Chip key={ index } id={ movie.id } label={ movie.name } />          
             ))}
           </ChipSet>
-          <button type='button' className='movie-list__button-more' onClick={this.changeGenreSize}>more genres</button>
+          <button type='button' className='movie-list__button-more' onClick={this.changeGenreSize}>More...</button>
         </div>
         <div className='movie-list__range'>
           <input type='range' min='0' max='10' step='0.5'
